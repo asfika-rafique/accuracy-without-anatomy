@@ -1,0 +1,23 @@
+{
+  "n": 2214,
+  "lesion_inside_brainmask": {
+    "mean": 0.6278609208079913,
+    "median": 0.9222633925097394,
+    "p10": 0.007462521209701568,
+    "frac_ge_090": 0.5103884372177055
+  },
+  "lesion_inside_headmask": {
+    "mean": 1.0,
+    "median": 1.0
+  },
+  "lesion_area_share": {
+    "mean": 0.015129544224519394,
+    "median": 0.00933837890625
+  },
+  "attribution_vs_lesion": {
+    "n": 335,
+    "cam_mass_in_lesion": 0.039534411460696375,
+    "lesion_area_share": 0.01430727830573694,
+    "enrichment": 2.763237746262603
+  }
+}

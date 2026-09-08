@@ -1,0 +1,46 @@
+{
+  "per_seed": {
+    "0": {
+      "n_lesion": 335,
+      "cam_in_lesion": 0.03576840848727986,
+      "lesion_area": 0.01430727830573694,
+      "enrichment": 2.5000148681624106,
+      "n_brain": 1061,
+      "cam_outside_brain": 0.6637725987656852,
+      "area_outside_brain": 0.8439941981510662,
+      "ratio": 0.786465831423733
+    },
+    "1": {
+      "n_lesion": 329,
+      "cam_in_lesion": 0.03938670811299263,
+      "lesion_area": 0.014337603444386398,
+      "enrichment": 2.7470914693496913,
+      "n_brain": 1069,
+      "cam_outside_brain": 0.6728904561198015,
+      "area_outside_brain": 0.8502064946659041,
+      "ratio": 0.791443561465876
+    },
+    "2": {
+      "n_lesion": 333,
+      "cam_in_lesion": 0.03969196312576062,
+      "lesion_area": 0.014165929845861486,
+      "enrichment": 2.801931363323563,
+      "n_brain": 1069,
+      "cam_outside_brain": 0.6614583299832437,
+      "area_outside_brain": 0.8496253046619212,
+      "ratio": 0.778529460403075
+    }
+  },
+  "summary": {
+    "seeds": 3,
+    "cam_in_lesion_mean": 0.038282359908677704,
+    "cam_in_lesion_sd": 0.0021824891678004226,
+    "lesion_area_mean": 0.014270270531994941,
+    "enrichment_mean": 2.6830125669452216,
+    "enrichment_sd": 0.16083523187604046,
+    "cam_outside_brain_mean": 0.6660404616229101,
+    "cam_outside_brain_sd": 0.006044069693089839,
+    "area_outside_brain_mean": 0.8479419991596305,
+    "ratio_mean": 0.7854796177642281
+  }
+}

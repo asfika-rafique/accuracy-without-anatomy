@@ -1,0 +1,140 @@
+{
+  "random_s0": {
+    "train": {
+      "n": 5039,
+      "hemorrhagic": 902,
+      "ischemic": 952,
+      "normal": 3185
+    },
+    "val": {
+      "n": 1079,
+      "hemorrhagic": 193,
+      "ischemic": 204,
+      "normal": 682
+    },
+    "test": {
+      "n": 1084,
+      "hemorrhagic": 195,
+      "ischemic": 205,
+      "normal": 684
+    },
+    "groups_split_across_partitions": 333,
+    "test_images_with_train_near_duplicate": 170,
+    "frac_test_leaked": 0.15682656826568267
+  },
+  "grouped_s0": {
+    "train": {
+      "n": 5038,
+      "hemorrhagic": 902,
+      "ischemic": 952,
+      "normal": 3184
+    },
+    "val": {
+      "n": 1083,
+      "hemorrhagic": 194,
+      "ischemic": 205,
+      "normal": 684
+    },
+    "test": {
+      "n": 1081,
+      "hemorrhagic": 194,
+      "ischemic": 204,
+      "normal": 683
+    },
+    "groups_split_across_partitions": 0,
+    "test_images_with_train_near_duplicate": 0,
+    "frac_test_leaked": 0.0
+  },
+  "random_s1": {
+    "train": {
+      "n": 5039,
+      "hemorrhagic": 902,
+      "ischemic": 952,
+      "normal": 3185
+    },
+    "val": {
+      "n": 1079,
+      "hemorrhagic": 193,
+      "ischemic": 204,
+      "normal": 682
+    },
+    "test": {
+      "n": 1084,
+      "hemorrhagic": 195,
+      "ischemic": 205,
+      "normal": 684
+    },
+    "groups_split_across_partitions": 312,
+    "test_images_with_train_near_duplicate": 169,
+    "frac_test_leaked": 0.1559040590405904
+  },
+  "grouped_s1": {
+    "train": {
+      "n": 5039,
+      "hemorrhagic": 902,
+      "ischemic": 952,
+      "normal": 3185
+    },
+    "val": {
+      "n": 1082,
+      "hemorrhagic": 194,
+      "ischemic": 205,
+      "normal": 683
+    },
+    "test": {
+      "n": 1081,
+      "hemorrhagic": 194,
+      "ischemic": 204,
+      "normal": 683
+    },
+    "groups_split_across_partitions": 0,
+    "test_images_with_train_near_duplicate": 0,
+    "frac_test_leaked": 0.0
+  },
+  "random_s2": {
+    "train": {
+      "n": 5039,
+      "hemorrhagic": 902,
+      "ischemic": 952,
+      "normal": 3185
+    },
+    "val": {
+      "n": 1079,
+      "hemorrhagic": 193,
+      "ischemic": 204,
+      "normal": 682
+    },
+    "test": {
+      "n": 1084,
+      "hemorrhagic": 195,
+      "ischemic": 205,
+      "normal": 684
+    },
+    "groups_split_across_partitions": 323,
+    "test_images_with_train_near_duplicate": 175,
+    "frac_test_leaked": 0.16143911439114392
+  },
+  "grouped_s2": {
+    "train": {
+      "n": 5033,
+      "hemorrhagic": 902,
+      "ischemic": 946,
+      "normal": 3185
+    },
+    "val": {
+      "n": 1089,
+      "hemorrhagic": 194,
+      "ischemic": 212,
+      "normal": 683
+    },
+    "test": {
+      "n": 1080,
+      "hemorrhagic": 194,
+      "ischemic": 203,
+      "normal": 683
+    },
+    "groups_split_across_partitions": 0,
+    "test_images_with_train_near_duplicate": 0,
+    "frac_test_leaked": 0.0
+  }
+}

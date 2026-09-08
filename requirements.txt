@@ -1,0 +1,14 @@
+# Python 3.10; CUDA build of torch installed from the PyTorch index:
+#   pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
+torch==2.5.1
+torchvision==0.20.1
+numpy>=1.26,<3
+pyarrow>=15
+pillow>=10
+opencv-python-headless>=4.9
+scikit-learn>=1.4
+matplotlib>=3.8
+pandas>=2.0
+pymupdf>=1.24
+python-docx>=1.1
+huggingface_hub>=0.23
