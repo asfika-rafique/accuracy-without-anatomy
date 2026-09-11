@@ -83,7 +83,7 @@ ax.plot(T, rec, "s--", ms=2.5, lw=1.0, color="#b2182b", label="same-scan pairs r
 ax.axvline(6, color="k", ls="--", lw=0.8)
 ax.set_xlabel("near-duplicate threshold (Hamming)"); ax.set_ylabel("%")
 ax.set_title("(c) redundancy and detector recall vs threshold", fontsize=7.5)
-ax.legend(fontsize=5.5, frameon=False, loc="center right"); ax.set_ylim(-3, 118)
+ax.legend(fontsize=5.5, frameon=False, loc="lower right"); ax.set_ylim(-3, 118)
 ax.grid(alpha=0.25, lw=0.4)
 
 # (d)-(g) content streams

@@ -1,0 +1,2 @@
+# Preserve the byte-level release manifest across platforms.
+* -text

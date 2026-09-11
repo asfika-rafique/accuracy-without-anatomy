@@ -1,16 +1,20 @@
-# Data
+# Source data (not included)
 
-No images are stored in this repository.
+Use the same `STROKE_AUDIT_ROOT` for preparation and every later pipeline step.
+In a fresh workspace use `data/` for primary shards and `lesionmasks/` for expert masks.
+The original working copy uses `_data/` and `_lesionmasks/`; `_config.py` accepts either.
+Do not create both variants in a new workspace, because existing underscore directories win.
 
-1. TEKNO21 / TEKNOFEST-2021 stroke collection — see the root README for provenance and
-   licensing. Download the Parquet shards of the Hugging Face mirror
-   `BTX24/tekno21-brain-stroke-dataset-multi` into `../_data/`, then run
-   `python exp/00_prepare.py`.
+1. Primary classification mirror:
+   https://huggingface.co/datasets/BTX24/tekno21-brain-stroke-dataset-multi
+   Put all Parquet shards directly in `data/`, then run `python exp/00_prepare.py`.
+   Expected manifest: 7202 slices; class counts 1290, 1361, 4551.
+2. Expert-mask mirror of the SAME collection:
+   https://huggingface.co/datasets/Karrar-Alhdrawi/brain-stroke-ct-dataset
+   Preserve `lesionmasks/<class>/masks/<numeric-ID>.png`.
+   Hugging Face snapshot selection `allow_patterns=["*/masks/*"]` retains this structure.
+   This is not an independent external validation dataset.
 
-2. Expert lesion masks, used only for the containment/attribution validation:
-   `Karrar-Alhdrawi/brain-stroke-ct-dataset`, downloaded into `../_lesionmasks/`
-   (`allow_patterns=["*/masks/*"]`). This is a mirror of the SAME underlying collection,
-   not an independent dataset.
-
-Conditions of use for the underlying clinical images are set by the issuing institutions
-(Turkish Ministry of Health / TÜSEB), not by the mirrors. Confirm them at source.
+Conditions of use of the underlying clinical collection are set by the issuing institutions,
+not by a mirror's repository licence tag. Verify them at source. No source CT images or
+expert lesion masks are redistributed; manuscript figures include illustrative CT panels.

@@ -1,0 +1,30 @@
+PASS: locked source byte identity: JBHI_Stroke_CT_FINAL.pdf 926e735cd7002d2c87ad0f439236127a1d18f28cf855589f4746dfff06ae32d1
+
+PASS: locked source byte identity: JBHI_Stroke_CT_FINAL.docx 08c655b37ac72830482591d82e0900639e832079e617f33fa720383c5a850f9d
+
+PASS: all shipped saved results/predictions/splits match project bytes.
+
+PASS: all packaged Python files parse.
+
+$ python exp/15_protocol_audit.py
+
+PASS: 36 records; complete 12-configuration x 3-seed grid; 15 epochs, batch 48, lr 3e-4; validation selection, split sizes and grouped leakage checked.
+Record checks do not establish patient separation, hidden implementation equivalence, or bitwise reproducibility.
+
+$ python exp/14_verify_numbers.py
+
+263/263 checks passed: .\JBHI_Stroke_CT_FINAL.docx
+PASS: numerical consistency. This is not a rerun of training or bootstrap inference.
+
+$ python exp/14_verify_numbers.py --manuscript JBHI_Stroke_CT_FINAL.pdf
+
+263/263 checks passed: JBHI_Stroke_CT_FINAL.pdf
+PASS: numerical consistency. This is not a rerun of training or bootstrap inference.
+
+$ python exp/run_all.py --dry-run
+
+36 runs planned; no training performed
+
+PASS: 7 US Letter PDF pages; correct active GitHub link.
+
+No training, inference experiment, or bootstrap estimation was run.

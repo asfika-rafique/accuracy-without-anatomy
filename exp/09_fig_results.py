@@ -21,13 +21,13 @@ S = json.load(open(os.path.join(RES, "summary.json")))
 plt.rcParams.update({"font.size": 7, "font.family": "serif", "axes.linewidth": 0.6})
 
 fig, axes = plt.subplots(1, 3, figsize=(7.16, 1.95),
-                         gridspec_kw=dict(width_ratios=[1.45, 1.0, 1.0], wspace=0.34))
+                         gridspec_kw=dict(width_ratios=[1.45, 1.0, 1.0], wspace=0.62))
 
 # ---------------- (a) content ablation ------------------------------------
 P = S["shortcut_probe"]
 order = [("resnet18/full", "full\nslice"), ("resnet18/brain", "brain\nonly"),
-         ("resnet18/nonbrain", "non-brain\n(no brain)"),
-         ("resnet18/exterior", "exterior\n(no head)")]
+         ("resnet18/nonbrain", "non-\nbrain"),
+         ("resnet18/exterior", "exterior")]
 acc = [P[k]["acc"] for k, _ in order]
 sd = [P[k].get("acc_sd", 0) for k, _ in order]
 auc = [P[k]["auc"] for k, _ in order]
@@ -82,9 +82,9 @@ hi = [CI[k]["accuracy"][2] - CI[k]["accuracy"][0] for k, _ in keys]
 y = np.arange(len(keys))
 ax.errorbar(v, y, xerr=[lo, hi], fmt="o", ms=3.5, lw=1.0, capsize=2.5, color="#2166ac")
 ax.set_yticks(y); ax.set_yticklabels([l for _, l in keys], fontsize=6)
-ax.set_xlim(0.955, 0.98); ax.invert_yaxis()
+ax.set_xlim(0.950, 0.98); ax.invert_yaxis()
 ax.set_xlabel("test accuracy (95% bootstrap CI)", fontsize=6)
-ax.set_title("(c) architecture is not\nthe limiting factor", fontsize=7.5)
+ax.set_title("(c) three tested\nbackbones", fontsize=7.5)
 ax.grid(axis="x", alpha=0.25, lw=0.4)
 
 fig.savefig(os.path.join(OUT, "fig_results.png"), dpi=600, bbox_inches="tight")

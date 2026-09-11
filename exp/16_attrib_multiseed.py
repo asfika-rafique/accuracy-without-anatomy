@@ -60,6 +60,10 @@ def cam_for(model, acts, grads, j):
     return cam if cam.sum() > 0 else None
 
 
+missing = [os.path.join(RUNS, f"resnet18_grouped_full_s{s}.pt") for s in (0, 1, 2) if not os.path.isfile(os.path.join(RUNS, f"resnet18_grouped_full_s{s}.pt"))]
+if missing:
+    raise FileNotFoundError("All three checkpoints are required: " + ", ".join(missing))
+
 res = {"per_seed": {}}
 E_in, A_in, OUT_f, OUTn_f = [], [], [], []
 

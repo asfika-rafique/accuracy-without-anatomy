@@ -1,181 +1,107 @@
-# Final JBHI Audit — Accuracy Without Anatomy
+# Final JBHI manuscript and reproducibility audit
 
-**Manuscript:** `JBHI_Stroke_CT_REVISED.docx` / `.pdf` — **7 rendered pages** (limit 8), abstract
-246 words (limit 250), 18 references all cited, 5 tables, 2 figures.
+> Historical report for the REVISED manuscript. The locked FINAL PDF/DOCX,
+> current README and VERIFICATION_FINAL.txt supersede version-specific details below.
+> The locked manuscript has 21 references and a 210-word abstract.
 
-**Authors (final, order preserved):** Tanha Asfika Jaman · Iftee Shekh Iftesham ·
-Mst Lovely Akter · Mostafa Farzana. Corresponding: T. A. Jaman.
+Finalized 11 September 2026. This report supersedes the previous REVISION_AUDIT.md. It records finalization of the existing work, not new experiments. No training, attribution inference, or bootstrap experiment was rerun. Figures were regenerated from existing data/results to correct presentation.
 
-**Machine checks (run them yourself):**
-`python exp/15_protocol_audit.py` — protocol uniformity across all 34 runs
-`python exp/14_verify_numbers.py` — manuscript numbers vs saved result files
+## Outcome
 
----
+The final manuscript is seven US Letter pages, with two figures, five tables and 18 cited references. The abstract is 245 whitespace-delimited tokens. The DOCX and Word-exported PDF agree. All seven PDF pages were inspected visually; affected pages were inspected again after the last corrections. No clipping, overlapping text, truncated confidence intervals, broken tables, or unreadable references were found. Fonts are embedded. The manuscript contains an active link to https://github.com/asfika-rafique/accuracy-without-anatomy.
 
-## A. Problems found, severity, and how each was fixed
+The corrected local repository package is ready for a later GitHub update. **GitHub was not synchronized, as explicitly requested.** The public commit inspected was `1d7569ec1a7b7be3fb9238670c82340100e91311`. Publication/submission itself was not performed.
 
-| # | Problem | Severity | Fixed? | How |
-|---|---|---|---|---|
-| 1 | **Author 4's name silently reordered** to "Farzana Mostafa" | High (authorship) | yes | Restored to **Mostafa Farzana** as given. Given/family-name assignment flagged for you to confirm. |
-| 2 | **Epochs differed by architecture** (12 for DenseNet-201/ResNet-50, 15 for ResNet-18) while the paper claimed an identical protocol | High | yes | **Re-ran 9 runs at 15 epochs.** All 34 runs now share epochs/batch/lr, verified mechanically. |
-| 3 | `exp/` scripts all hardcoded `D:/paper publish` | High (reproducibility) | yes | Added `exp/_config.py`; 17 scripts de-pathed; `STROKE_AUDIT_ROOT` override. Zero absolute paths remain. |
-| 4 | Contribution (iv) still cited the deleted YOLOv8 section | High (dangling claim) | yes | Rewritten to the attribution analysis. |
-| 5 | Abstract said architectures agree "within 0.2 points" | Medium | yes | Corrected to "within one point" (measured spread 0.89). |
-| 6 | Leakage described as "an honest null" | Medium (now false) | yes | Under the uniform protocol **both** architectures inflate: **+0.78 pp** (DenseNet), **+1.33 pp** (ResNet-18). Text, abstract, discussion rewritten. |
-| 7 | Table I batch listed as "24–64" | Medium | yes | Now "15 / 48 / 3×10⁻⁴, identical for every run". |
-| 8 | Methods §III-E heading still "Attribution and **Legacy Localization**" | Medium | yes | Renamed to "Attribution". |
-| 9 | Fig. 1 caption said "all brain tissue deleted" | Medium (overclaim) | yes | Now "that compartment deleted", plus a note that the non-brain stream is not assumed lesion-free. |
-| 10 | Reference [18] (Q-YOLOv8) orphaned after the YOLO cut | Medium | yes | Removed; renumbered to 18 references, all cited. |
-| 11 | References left the last page 3/4 empty | Low (layout) | yes | Trailing continuous section break balances the columns. |
-| 12 | Split-policy claim "identical in everything else" was unverified | Medium | yes | Now names the fields, *verified from the saved run records*. |
-| 13 | Stale values after re-runs (0.9701, 0.9682, 0.9705, 0.9943, 0.9949, 0.9653, 3.27, +0.04, 0.96 points, 0.970) | High | yes | 18 value-level updates; stale-number sweep now returns clean. |
+## Preserved scientific results
 
-### Carried over and re-verified as still correct
-- "Lesion-free" appears **once**, on the **exterior** stream only (containment 1.000). The
-  non-brain stream is never called lesion-free.
-- No YOLO material anywhere; every quantity is newly produced.
-- Data statement declares both mirrors and does not attribute the mirror's Apache-2.0 tag to the
-  underlying clinical collection.
-- Parameter counts stated as measured (11.2 / 18.1 / 23.5 M); no "order of magnitude".
+| Quantity | Verified final value | Existing evidence |
+|---|---|---|
+| TEKNO21 slices | 7,202; classes 1,290 / 1,361 / 4,551 | dup_stats.json; split/run records |
+| Known duplicate pairs | 429 same-scan provenance pairs | dup_stats.json; Figure 1 inputs |
+| DenseNet-201 grouped accuracy | 0.9661; 95% interval [0.9596, 0.9722] | summary.json; saved runs/predictions |
+| ResNet-50 grouped accuracy | 0.9695; 95% interval [0.9633, 0.9753] | summary.json; saved runs/predictions |
+| Random-versus-grouped inflation | +0.78 pp DenseNet-201; +1.33 pp ResNet-18 | summary.json; saved runs |
+| Full-slice model on brain-only / brain-deleted input | 0.5660 / 0.6690 | crossstream.json |
+| Exterior macro-AUC | 0.8342; accuracy is separately 0.6616 | summary.json; saved runs/predictions |
+| Attribution enrichment | 2.68 times +/- 0.16 | attrib_multiseed.json |
+| CAM mass outside brain | 66.6 +/- 0.6% | attrib_multiseed.json |
+| Permutation accuracy | 0.4476 +/- 0.0240 | summary.json; three permutation run records |
+| Permutation macro-AUC | 0.5107 +/- 0.0131 | summary.json; three permutation run records |
 
----
+The 429 provenance pairs are not all pixel-identical: recorded dHash distances range from 0 to 5. The count and scientific analysis are unchanged. Cross-stream accuracies must not be confused with separately retrained brain-only/non-brain accuracies of 0.9056/0.9010. Historical seed-0 attribution fields remain in their original JSON files for provenance; attrib_multiseed.json supplies the final attribution. All original saved result JSON files are retained unchanged.
 
-## B. Experiments re-run this round
+## Changes made
 
-| Runs | Reason | Protocol | Result |
-|---|---|---|---|
-| `densenet201_grouped_full_s{0,1,2}` | epoch mismatch vs ResNet-18 | 15 ep, bs 48, lr 3e-4 | **0.9661 ± 0.0053** (was 0.9701 @ 12 ep) |
-| `densenet201_random_full_s{0,1,2}` | keep split-policy pairing consistent | same | **0.9739 ± 0.0046** |
-| `resnet50_grouped_full_s{0,1,2}` | epoch mismatch | same | **0.9695 ± 0.0009** |
+### Manuscript and builder
 
-Consequence: the leakage effect became **consistently positive** across architectures instead of
-a null for DenseNet — a more coherent and more honest result than before.
+1. Restored the exact author presentation: **Tanha Asfika Jaman; Iftee Shekh Iftesham; Mst Lovely Akter; MOSTAFA FARZANA**, in that order. Spelled out corresponding author Tanha Asfika Jaman. Aligned the license's author capitalization without changing its terms.
+2. Added the actual GitHub URL and hyperlink to Data, Code and Ethics Statements.
+3. Removed the stray "Originally No" text and unsupported unconditional claim that no institutional approval was required. Retained the verifiable public/anonymised-data description and original collection's ethics citation [10]. Clarified that illustrative CT panels are included but the source dataset is not redistributed.
+4. Limited lesion-exclusion claims to annotated pixels in the 2,214 scorable masks. Removed claims of complete tissue/anatomy absence and categorical identification of the shortcut's physical source. Preserved the imperfect-mask, out-of-distribution, causal-interpretation and patient-separation limitations.
+5. Corrected the inference drawn from filename adjacency: 0.6236 versus 0.6235 does not establish patient independence. Grouping remains a calibrated lower bound on examination-level separation.
+6. Matched preprocessing to code: 256-pixel cache, 224-pixel input, ImageNet normalization, and the actual crop/flip/rotation augmentation. Corrected provenance-table "from scratch" wording to ImageNet initialization.
+7. Replaced obsolete single-seed attribution descriptions with three-checkpoint methods and actual usable sample counts: outside-brain 1,061/1,069/1,069; lesion attribution 335/329/333.
+8. Matched statistical wording to implementation: Table II uses 5,000 pooled-prediction bootstrap draws; Table III combines 3,333 paired draws within each seed into 9,999 draws. Explicitly distinguished this mixture from a confidence interval for a seed-averaged or patient-level effect. Replaced zero-tail p < 0.0001 reporting with conservative p < 0.001; saved statistics and significance conclusions were preserved.
+9. Corrected one non-headline Table II value: ResNet-18 random-split macro-AUC is the seed mean 0.9947 +/- 0.0043, rather than pooled 0.9946 paired with a seed SD.
+10. Corrected cited-study results in [4] to 98.9% stroke detection, 98.5% ischaemia-versus-haemorrhage classification, and lesion IoU 0.952. Removed the unsupported 0.93 claim attributed to [2]; distinguished its collected/development-and-validation scans from a training-only count. Corrected E. Yagis's initial and narrowed other attribution/localization claims to what cited sources support.
+11. Renumbered tables and callouts in physical order I-V. Kept table rows together and repeated headers, eliminating the orphaned first protocol-table row. Increased body text to 10 pt; retained the existing overall IEEE-style design and seven-page length.
 
----
+### Figures
 
-## C. Final verified numbers (all traced to `_results/`)
+12. Extended Figure 2's architecture axis to display the complete ResNet-18 lower confidence limit; increased panel spacing and clarified stream labels.
+13. Moved Figure 1's legend away from its plotted line. Updated anatomy/stream captions to reflect geometric masks and annotated-lesion validation.
 
-**Classification — redundancy-aware split, held-out test, 3 seeds**
-DenseNet-201 **0.9661** [0.9596, 0.9722] · ResNet-50 **0.9695** [0.9633, 0.9753] ·
-ResNet-18 **0.9605** [0.9534, 0.9670] — spread **0.89 pp**
+### Reproducibility package
 
-**Redundancy / leakage**
-15.5 % of images in a redundancy group · random split leaves 15.6–16.1 % of test in
-near-duplicate contact with train, grouped split 0 % · aggregate inflation **+0.78 pp**
-(DenseNet), **+1.33 pp** (ResNet-18) · stratified: leaked **0.9980 / 0.9961** vs clean
-**0.9693 / 0.9697**
+14. Added a portable 36-run launcher (`exp/run_all.py`) and replaced the machine-specific shell launcher with a wrapper. Made epochs/batch/learning rate explicit. Added preflight checks for records whose predictions or required checkpoints are missing; retained all three full-slice ResNet-18 checkpoints when training for later attribution. No training was launched.
+15. Replaced the protocol checker with a failing-on-error audit of the exact 36-run, three-seed grid, protocol fields, validation-based selection, sample totals, split consistency and zero grouped leakage.
+16. Replaced the stale manuscript-text-file numerical checker with direct DOCX/PDF support, explicit builder fallback, result aggregation and table-row checks, author/link checks and stale-text detection.
+17. Required all three checkpoints for final multi-seed attribution instead of allowing an incomplete seed set to overwrite the final summary.
+18. Updated README/data instructions for the actual dependency order, fresh rerun workspace, CUDA/Windows setup, saved-result verification, data layout, bootstrap interpretation and superseded seed-0 fields. Added ENVIRONMENT.md with the current original environment's direct dependency versions, explicitly not a historical lockfile.
+19. Updated ignore rules for both directory layouts, excluding source datasets/checkpoints while retaining the final manuscript and reference predictions.
+20. Packaged 36 saved prediction arrays and six split assignments alongside unchanged result JSON, final figures, manuscript, builder and scripts. Source CT datasets, lesion-mask datasets and model checkpoints are excluded. Replaced the stale audit with this report; supplied verification evidence and a SHA-256 manifest.
 
-**Content ablation (ResNet-18, identical protocol)**
-full **0.9605** · brain-only **0.9056** · non-brain **0.9010** · exterior **0.6616**
-(macro-AUC **0.8342** [0.8007, 0.8620]; chance 0.500; majority class 0.632)
+## Verification evidence and limits
 
-**Paired bootstrap, 10 000 resamples**
-full − brain **+0.0548** [+0.0343, +0.0768] p<0.0001 · brain − non-brain **+0.0047**
-[−0.0204, +0.0296] **p = 0.75** · non-brain − exterior **+0.2392** p<0.0001
+- Protocol audit: all 36 records pass; 15 epochs, batch 48 and learning rate 0.0003 throughout the final grid.
+- Numerical verifier: 263/263 checks passed for the finalized DOCX and separately for its PDF. DOCX verification includes table-row placement; PDF numerical presence checks complement, rather than replace, visual review.
+- Independent recomputation of accuracy, macro-F1 and macro-AUC from all 36 saved prediction arrays matched the corresponding run records within 1e-12. This used saved outputs, not model inference.
+- Negative tests demonstrated that the checkers reject a changed 12-epoch run record and a deliberately wrong manuscript table accuracy. These mutations were confined to a scratch fixture.
+- All 18 references were checked against primary publication sources and all are cited. The particularly consequential correction was reference [4], not this paper's experiments.
+- Final PDF: seven 612 x 792 pt pages; embedded fonts; two figures; five tables; active correct GitHub URI; no tracked changes/comments; no text blocks beyond page boundaries. Visual review covered figures, legends, axes, tables, captions, columns, page breaks and references.
+- Full training from a clean environment was deliberately not rerun. Broad dependency bounds do not guarantee bitwise reproducibility. Saved checkpoints are not distributed, so regeneration of attribution requires retraining or separately obtaining the original checkpoints. No claim of fresh end-to-end reproduction is made.
 
-**Controls** permuted labels 0.4302 (AUC 0.5243) · duplicates removed: full 0.9616,
-non-brain 0.9043, exterior 0.6512 (AUC 0.8223)
+## Current official JBHI requirements and budget
 
-**Cross-stream dependence** full-slice models scored **0.6690 with the brain deleted** vs
-**0.5660 with only the brain**
+Checked the [official JBHI manuscript instructions](https://www.embs.org/jbhi/prepare-and-submit-your-manuscript/) during this audit. The regular-paper submission uses a single-spaced, two-column PDF with embedded figures/tables and an abstract of no more than 250 words. The final file satisfies these checked requirements; acceptance or portal approval is not guaranteed by a local audit.
 
-**Expert-mask validation** 2 214 scorable lesion masks · containment in intracranial mask
-**62.8 %** (median 92.2 %) · containment in head mask **1.0000** · Grad-CAM enrichment in lesion
-**2.76×**
+For the **traditional/subscription route**, open access is optional. At seven pages the paper is below the eight-page mandatory-overlength threshold. The regular-paper page charge up to eight pages is voluntary; do not elect it or optional paid services for the stated $0 mandatory author-side budget. Preserve this limit if editors request revisions; mandatory overlength charges apply beyond eight pages. No OA purchase or paid service was introduced.
 
----
+The official page also requires a cover letter, author ORCIDs, institutional email information and the multi-author consent form. It encourages suggested reviewers. These are submission-package/portal matters, not evidence of a scientific defect. The [official consent form](https://www.embs.org/jbhi/wp-content/uploads/sites/18/2026/08/jbhi-consent_form_v3-1_fixed.pdf) requires the authors' own signatures; none were fabricated or applied here. Originality, exclusive submission and all-author approval must be certified by the authors themselves.
 
-## D. Remaining limitations (genuinely unresolvable here)
+Primary sources for corrected claims include [Yalcin and Vural](https://www.sciencedirect.com/science/article/pii/S001048252200676X), [Chilamkurthy et al.](https://pubmed.ncbi.nlm.nih.gov/30318264/), [Kuo et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC6842581/), [Yagis et al.](https://www.nature.com/articles/s41598-021-01681-w), and the [original TEKNOFEST collection paper](https://eajm.org/index.php/pub/article/view/3038).
 
-1. **Single benchmark.** Both available mirrors are the *same* TEKNOFEST source (6 643/6 650
-   filenames match ours). RSNA ICH is a different task at ~100 GB and would not test this
-   three-class claim. No independent same-task dataset was found.
-2. **Physical cause of the shortcut unidentified.** Non-anatomical information is present and
-   sufficient; which acquisition factor supplies it is unknown. Needs the DICOM release with
-   scanner/protocol metadata. The paper does not claim the head support is causally responsible.
-3. **Subject-level splitting impossible** — the release carries no identifiers. Our grouping is a
-   calibrated lower bound; the embedding test shows the release is decorrelated at study level.
-4. **Non-brain stream is not cleanly lesion-free** (62.8 % containment). Stated plainly; the
-   argument rests on the exterior stream, whose lesion-free status is verified.
-5. **Attribution is single-seed** (seed-0 checkpoint), stated as such.
-6. **384 slices** have degenerate intracranial masks; the sensitivity analysis excludes them and
-   the ordering is unchanged.
-7. Runs reproduce to within the seed spread, not bitwise (cuDNN autotuning + mixed precision).
+## Final checklist
 
----
+| Item | Status | Finding |
+|---|---|---|
+| Scientific consistency | PASS | Existing results preserved; inference limitations stated |
+| Numerical consistency | PASS | 263 checks for each manuscript format; saved predictions independently verified |
+| Authors | PASS | Exact four names/order; full corresponding-author name |
+| Figures/tables | PASS | Two figures and five tables; display defects corrected |
+| References | PASS | 18 cited references; substantive citation errors corrected |
+| IEEE/JBHI format | PASS | Checked two-column PDF, embedded figures/tables, abstract and budget-related length requirements |
+| GitHub link | PASS | Correct clickable URL in final PDF |
+| GitHub reproducibility | WARNING | Corrected local package ready; public repository intentionally not synchronized; no fresh training rerun |
+| Page count | PASS | Seven pages including references; one-page headroom below eight |
+| Placeholders | PASS | None found in the final manuscript; no tracked changes/comments |
+| Final PDF quality | PASS | All pages visually inspected; embedded fonts and clean layout |
+| Submission readiness | WARNING | Manuscript file finalized; later GitHub synchronization and author/portal documents remain |
 
-## E. Final JBHI review
+## Remaining actions
 
-| Criterion | Score |
-|---|---|
-| Novelty | 6.5 / 10 — established probe design, but the first such audit of this benchmark |
-| Methodology | 8.5 / 10 — uniform protocol, held-out test, three controls, machine-verified |
-| Reproducibility | 9 / 10 — full pipeline, no hardcoded paths, two self-audit scripts |
-| Statistical rigour | 8.5 / 10 — paired bootstrap, CIs, seeds; no multiplicity correction |
-| Clinical relevance | 6 / 10 — matters for practice, but no clinical validation and none claimed |
-| Writing | 8.5 / 10 |
-| JBHI fit | 7 / 10 — squarely health informatics; audit papers less common than method papers |
+1. When authorized, synchronize the supplied repository package to GitHub so the public code matches this final version. No sync was performed.
+2. Complete/confirm the cover letter, each author's ORCID and institutional details, signed author consent, and the submission declarations. Existing author email/affiliation text was preserved, not independently authenticated.
+3. Submit the supplied PDF as a traditional regular paper, decline voluntary charges and optional paid services, and keep the final accepted version within eight pages to maintain the mandatory-fee budget.
 
-## F. Editorial recommendation: **Minor Revision**
-
-Not Accept: the single-benchmark scope is a legitimate limitation an editor may want addressed,
-and the shortcut's physical cause is unidentified. Not Major Revision: the protocol defect is
-fixed by re-running, every claim matches evidence, controls are present, terminology matches the
-validation, and remaining gaps are explicitly labelled. What is left needs *new data*, not
-revision of this manuscript.
-
-## G. Submission status — manuscript is clean
-
-The manuscript contains **no placeholders of any kind** (verified: 0 occurrences of `[[TBD`,
-`TODO`, `FIXME`, `placeholder`). ORCIDs were removed from the PDF because IEEE collects them in
-the Author Portal, not in the manuscript body. The code-availability statement is complete and
-truthful without an invented URL.
-
-Author IDs confirmed by the corresponding author: Mst Lovely Akter `202353080157`,
-Mostafa Farzana `202353080121`.
-
-Remaining items are **submission-portal only** — nothing further is needed in the document:
-
-1. Link the four ORCIDs in the IEEE Author Portal.
-2. Signed Author Consent form (multi-author).
-3. Four suggested reviewers from institutions other than NUIST.
-4. Cover letter stating innovation and significance relative to JBHI scope.
-5. At Article Setup: **decline voluntary page charges, decline open access, decline
-   colour-in-print** — this is what keeps the mandatory cost at $0.
-6. Optional: add the public repository URL to the code statement once the GitHub repo is live.
-
-
----
-
-## FINAL PRE-SUBMISSION AUDIT (3 reviewers + handling editor)
-
-Nine further issues were found in the finalized manuscript. All A and B issues are fixed; two
-required new runs.
-
-| # | Issue | Class | Fixed | How |
-|---|---|---|---|---|
-| F1 | Fig. 2(b) caption said the aggregate split effect "stays under one point" — false after the 15-epoch re-runs (+0.78 / +1.33) | A | yes | Caption now states 0.8 to 1.3 points |
-| F2 | Section IV-B heading "Redundancy Produces **Local, Not Aggregate**, Inflation" contradicted its own body | A | yes | Retitled "Redundancy Inflates Accuracy, Most Sharply on the Affected Subset" |
-| F3 | Permuted-label control had **one seed** while every other row had three | A | yes | **Ran seeds 1–2.** Now 0.4476 ± 0.0240 acc, 0.5107 ± 0.0131 AUC over 3 seeds |
-| F4 | Attribution analysis was **seed-0 only** (a stated limitation) | A | yes | **New `exp/16_attrib_multiseed.py` over all 3 checkpoints.** Enrichment 2.68× ± 0.16; CAM outside brain 66.6 ± 0.6 %. Limitation removed |
-| F5 | No multiple-comparison statement for the four contrasts in Table V | A | yes | States the three significant contrasts survive Bonferroni and the fourth is a null; also states what the bootstrap intervals do and do not capture |
-| F6 | p = 0.75 reported as bare non-significance | B | yes | Reframed as a **bounded null**: the interval excludes any lesion-only advantage above ~3 points |
-| F7 | "provably never sees lesion tissue" / "no patient tissue whatsoever" — stronger than what was verified | B | yes | Now "no lesion tissue on any slice for which an expert annotation exists"; three occurrences corrected incl. Limitations and Conclusion |
-| F8 | "the only region that can contain the lesion" conflated our geometric mask with the anatomical compartment | B | yes | "the region that must anatomically contain the lesion" |
-| F9 | "The result is unambiguous" / "confirming" / "well inside the seed spread" | B | yes | Softened to "The ordering is clear" / "indicating" / "comparable to the within-architecture seed spread" |
-
-**Verification after fixes:** 38/40 headline numbers auto-verified (the 2 exceptions are values the
-manuscript does not quote); protocol audit reports 0 mismatches across all 36 runs; 0 placeholders;
-0 uncited references; 7 pages; abstract 246 words.
-
-## H. Files
-
-The GitHub package is assembled at `github_package/` (71 files, 1.3 MB): code, all 34 run
-records, summary JSON, both figures, README, requirements, MIT licence, .gitignore and data
-instructions. No images, checkpoints, secrets or restricted data. Verified to run standalone.
-
-
-`JBHI_Stroke_CT_REVISED.docx` · `JBHI_Stroke_CT_REVISED.pdf` (7 pages) · `build_manuscript.py` ·
-`exp/` (18 scripts incl. `_config.py`, `14_verify_numbers.py`, `15_protocol_audit.py`) ·
-`_results/` (34 run records + summaries) · `README.md` · `requirements.txt` · `LICENSE` ·
-`.gitignore` · `data/README.md`
+No additional experiment or manuscript rewrite is identified as necessary by this audit.
